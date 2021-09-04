@@ -11,9 +11,13 @@ const photoController = require('./controllers/photoControllers');
 const pageController = require('./controllers/pageControllers');
 
 //connect DB
-mongoose.connect('mongodb://localhost/pcat-test-db', {
+mongoose.connect('mongodb+srv://oguzhan:xwlzQLpr6jpGshzX@cluster0.t2rhi.mongodb.net/pcat-db?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+}).then(() => {
+  console.log("DB CONNECTED!");
+}).catch((err) =>{
+  console.log(err);
 });
 
 //Template Engine
@@ -47,7 +51,7 @@ app.put('/photos/:id', photoController.updatePhoto);
 
 app.delete('/photos/:id', photoController.deletePhoto);
 
-const port = 3000;
+const port = process.env.PORT || 5000; 
 app.listen(port, () => {
   console.log(`Sunucu ${port} portunda başlatıldı..`);
 });
